@@ -9,10 +9,14 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(express.json());
 
 async function connect() {
   try {
-    await mongoose.connect(process.env.DATABASE_URL)
+    await mongoose.connect(process.env.DATABASE_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
     console.log('Connected to MongoDB')
   } catch (err) {
     console.log(err)
@@ -20,6 +24,11 @@ async function connect() {
 }
 
 connect();
+
+const customersRoutes = require('./routes/customers.ts');
+app.use('/customers', customersRoutes)
+
+export { };
 
 
 
