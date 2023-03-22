@@ -2,11 +2,17 @@ const basePrices = require('../../basePrices.json');
 const discounts = require('../../discounts.json')
 
 
-function getBasePrice(City: string) {
-  return basePrices.find((item: any) => item.city === City).amount;
+function getBasePrice(City: string): number {
+  const basePrice = basePrices.find((item: any) => item.city === City);
+
+  if (!basePrice) {
+    return basePrices.find((item: any) => item.city === "other")!.amount;
+  }
+
+  return basePrice.amount;
 }
 
-function getBaseDiscount(Birthday: Date) {
+function getBaseDiscount(Birthday: Date): number {
 
   //get the age of customer
   const now = new Date();
