@@ -7,6 +7,8 @@ const Customers = Models.Customer;
 const getCustomer = require('../middlewares/getCustomer.ts')
 const userSchema = require('../middlewares/userValidationSchema.ts')
 
+const { calculateInsurance } = require('../utils/calculateInsurance.ts')
+
 
 //GET ALL CUSTOMERS
 
@@ -96,6 +98,20 @@ router.delete('/:id', getCustomer, async (req: any, res: any) => {
 })
 
 //CALCULATE INSURANCE
+
+router.get('/:id/calculate-insurance', getCustomer, async (req: any, res: any) => {
+
+  const currentCustomer = res.customer
+  const { City, Birthday } = currentCustomer;
+
+  try {
+    const insurancePrice = await calculateInsurance(City, Birthday);
+    res.json({ insurancePrice });
+  }
+  catch (err: any) {
+    res.status(500).json({ message: err.message })
+  }
+})
 
 
 
