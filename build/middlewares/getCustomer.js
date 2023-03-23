@@ -35,43 +35,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-require('dotenv').config();
-var express = require('express');
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
-var app = express();
-app.use(bodyParser.json());
-app.use(express.json());
-function connect() {
+var Models = require('../models/customerModel.ts');
+var Customers = Models.Customer;
+//Middleware function
+function getCustomer(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var err_1;
+        var customer, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, mongoose.connect(process.env.DATABASE_URL, {
-                            useNewUrlParser: true,
-                            useUnifiedTopology: true
-                        })];
+                    return [4 /*yield*/, Customers.findById(req.params.id)];
                 case 1:
-                    _a.sent();
-                    console.log('Connected to MongoDB');
+                    customer = _a.sent();
+                    if (customer == null) {
+                        return [2 /*return*/, res.status(404).json({ message: 'Cant find customer with given id' })];
+                    }
                     return [3 /*break*/, 3];
                 case 2:
                     err_1 = _a.sent();
-                    console.log(err_1);
+                    res.status(500).json({ message: err_1.message });
                     return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                case 3:
+                    res.customer = customer;
+                    next();
+                    return [2 /*return*/];
             }
         });
     });
 }
-connect();
-var customersRoutes = require('./routes/customers.ts');
-app.use('/customers', customersRoutes);
-var port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', function () {
-    console.log('Running on Port: ' + port);
-});
+module.exports = getCustomer;
