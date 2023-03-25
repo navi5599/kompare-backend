@@ -4,10 +4,26 @@ This is the backend project for the [Frontend Project](https://github.com/navi55
 ## Setup
 Clone the repository and navigate to the project root directory.
 
+Install homebrew using command:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 Install the project dependencies using npm:
 
 ```bash
 npm install
+```
+
+Setup mongodb community:
+
+```bash
+brew install mongodb-community@6.0
+```
+
+```bash
+brew services start mongodb-community
 ```
 
 Start the development server:
@@ -15,6 +31,8 @@ Start the development server:
 ```bash
 npm run start:dev
 ```
+
+
 
 This command will start the server in development mode and automatically restart the server whenever you make changes to the code.
 

@@ -13,9 +13,11 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
+// const url = process.env.DATABASE_URL;
+
 async function connect() {
   try {
-    await mongoose.connect(process.env.DATABASE_URL, {
+    await mongoose.connect('mongodb://localhost:27017/mydatabase', {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
