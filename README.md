@@ -1,5 +1,5 @@
 # Backend Project
-This is the backend project for the Frontend Project, which is a project built with React that connects to this backend built with Node.js.
+This is the backend project for the [Frontend Project](https://github.com/navi5599/kompare-frontend) , which is a project built with React that connects to this backend built with Node.js.
 
 ## Setup
 Clone the repository and navigate to the project root directory.
