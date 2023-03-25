@@ -58,11 +58,6 @@ router.post('/', async (req: any, res: any) => {
 
 router.patch('/:id', getCustomer, async (req: any, res: any) => {
 
-  const { error } = userSchema.validate(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-
   const allowedUpdates = ['Email', 'Name', 'Surname', 'City', 'Birthday'];
   const updates: any = {};
 
@@ -76,7 +71,7 @@ router.patch('/:id', getCustomer, async (req: any, res: any) => {
 
   try {
     const updatedCustomer = await res.customer.save();
-    res.json(updatedCustomer);
+    res.status(200).json(updatedCustomer);
   } catch (err: any) {
     res.status(400).json({ message: err.message });
   }
